@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sfax Medina Heritage | GIS Platform</title>
+
+<meta name="description"
+content="Professional GIS Platform for Monitoring Historic Buildings inside the Medina of Sfax.">
+
+<link rel="icon" href="images/heritage-logo.png" >
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+</head>
+
+<body>
+
+<!-- ===========================
+HEADER
+=========================== -->
+
+<header class="header">
+
+<div class="container">
+
+<div class="logo-area">
+
+<img
+src="images/heritage-logo.png"
+class="heritage-logo"
+alt="Association de Sauvegarde de la Médina de Sfax">
+
+<div>
+
+<h1>
+
+SFAX MEDINA HERITAGE
+
+</h1>
+
+<p>
+
+Professional GIS Platform
+
+</p>
+
+</div>
+
+</div>
+
+<nav>
+
+<ul>
+
+<li>
+
+<a href="#home"
+data-lang="home">
+
+Home
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#statistics"
+data-lang="statistics">
+
+Statistics
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#atrisk-section"
+data-lang="atrisk_nav">
+
+كشف المتداعية للسقوط
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#contact"
+data-lang="contact">
+
+Contact
+
+</a>
+
+</li>
+
+</ul>
+
+</nav>
+
+<div class="language-switcher">
+
+<button onclick="setLanguage('en')" data-lang-btn="en">
+
+🇬🇧
+
+</button>
+
+<button onclick="setLanguage('fr')" data-lang-btn="fr">
+
+🇫🇷
+
+</button>
+
+<button onclick="setLanguage('ar')" data-lang-btn="ar">
+
+🇹🇳
+
+</button>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- ===========================
+HERO
+=========================== -->
+
+<section
+class="hero"
+id="home">
+
+<div class="hero-overlay"></div>
+
+<div class="hero-content">
+
+<h2
+data-lang="hero_title">
+
+SFAX MEDINA HERITAGE
+
+</h2>
+
+<p
+data-lang="hero_subtitle">
+
+Professional GIS Platform for Monitoring
+Historic Buildings inside the Medina of Sfax.
+
+</p>
+
+<div class="hero-buttons">
+
+<a
+href="#atrisk-section"
+class="btn-primary">
+
+<i class="fa-solid fa-map-location-dot"></i>
+
+<span
+data-lang="atrisk_nav">
+
+كشف المتداعية للسقوط
+
+</span>
+
+</a>
+
+<a
+href="#statistics"
+class="btn-secondary">
+
+<i class="fa-solid fa-chart-column"></i>
+
+<span
+data-lang="dashboard">
+
+Dashboard
+
+</span>
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===========================
+STATISTICS
+=========================== -->
+
+<section id="statistics">
+
+<div class="container">
+
+<h2
+data-lang="statistics">
+
+Statistics
+
+</h2>
+
+<div class="cards">
+
+<div class="card">
+
+<i class="fa-solid fa-building"></i>
+
+<h3 id="kpi-total">
+
+0
+
+</h3>
+
+<p data-lang="kpi_total_label">
+
+عقار متداعي للسقوط
+
+</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-circle-check"></i>
+
+<h3 id="kpi-safe">
+
+0
+
+</h3>
+
+<p data-lang="kpi_safe_label">
+
+بيانات مكتملة
+
+</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-eye"></i>
+
+<h3 id="kpi-monitoring">
+
+0
+
+</h3>
+
+<p data-lang="kpi_monitoring_label">
+
+يتطلب تدخل / مراقبة
+
+</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-triangle-exclamation"></i>
+
+<h3 id="kpi-risk">
+
+0
+
+</h3>
+
+<p data-lang="kpi_risk_label">
+
+خطر جسيم (هدم/ترميم عاجل)
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section> 
+<!-- ===========================
+AT-RISK BUILDINGS SURVEY MAP (كشف العقارات المتداعية للسقوط)
+=========================== -->
+
+<section id="atrisk-section" class="gis-section atrisk-section">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2 data-lang="atrisk_title">كشف العقارات المتداعية للسقوط</h2>
+
+<p data-lang="atrisk_subtitle">مخطط ميداني رسمي (أوت 2018) — جمعية صيانة المدينة العتيقة بصفاقس. اضغط على أي رقم لعرض تفاصيل العقار.</p>
+
+</div>
+
+<div class="atrisk-workspace">
+
+<div class="atrisk-map-col">
+
+<div id="atrisk-map-container"></div>
+
+</div>
+
+<aside class="sidebar atrisk-sidebar">
+
+<div id="atrisk-sidebar-empty">
+
+<i class="fa-solid fa-triangle-exclamation"></i>
+
+<h3 data-lang="atrisk_sidebar_title">معلومات العقار</h3>
+
+<p data-lang="atrisk_empty">اضغط على أي رقم بالمخطط لعرض معلوماته الكاملة.</p>
+
+</div>
+
+<div id="atrisk-sidebar-details" style="display:none;">
+
+<div class="building-header atrisk-header">
+
+<span id="atrisk-badge">-</span>
+
+</div>
+
+<div class="building-content">
+
+<h2 id="atrisk-title">-</h2>
+
+<div id="atrisk-verify-note" class="atrisk-verify-note">
+
+<i class="fa-solid fa-circle-exclamation"></i>
+
+<span>هذه البيانات مستخرجة من وثيقة ممسوحة ضوئياً ولم تُراجع بعد — يرجى التحقق من الأصل قبل الاعتماد عليها.</span>
+
+</div>
+
+<div class="info-grid">
+
+<div>
+
+<h4 data-lang="atrisk_field_number">رقم العقار</h4>
+
+<p id="atrisk-owner">-</p>
+
+</div>
+
+<div>
+
+<h4 data-lang="atrisk_field_address">العنوان</h4>
+
+<p id="atrisk-address">-</p>
+
+</div>
+
+<div>
+
+<h4 data-lang="atrisk_field_type">نوع العقار</h4>
+
+<p id="atrisk-type">-</p>
+
+</div>
+
+</div>
+
+<h3 data-lang="atrisk_field_diagnosis">تشخيص الاختلالات</h3>
+
+<p id="atrisk-diagnosis">-</p>
+
+<h3 data-lang="atrisk_field_intervention">التدخل المقترح</h3>
+
+<p id="atrisk-intervention">-</p>
+
+</div>
+
+</div>
+
+</aside>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===========================
+ABOUT
+=========================== -->
+
+<section id="about" class="about-section">
+
+<div class="container">
+
+<h2 data-lang="about">
+
+About The Project
+
+</h2>
+
+<p data-lang="aboutText">
+
+Sfax Medina Heritage is a Professional Geographic Information System (GIS)
+developed to monitor, document and preserve the historic buildings of the
+Medina of Sfax. The platform centralizes geographic, historical and technical
+information to support heritage management and decision-making.
+
+</p>
+
+</div>
+
+</section>
+
+<!-- ===========================
+CONTACT
+=========================== -->
+
+<section id="contact" class="contact-section">
+
+<div class="container">
+
+<h2 data-lang="contact">
+
+Contact
+
+</h2>
+
+<p data-lang="contact_gis">
+
+Need a Professional GIS Platform?
+
+</p>
+
+<p data-lang="contact_website">
+
+Need a Professional Website?
+
+</p>
+
+<p data-lang="contact_software">
+
+Need Custom Software?
+
+</p>
+
+<br>
+
+<a
+href="mailto:soussiahmed326@gmail.com"
+class="contact-email">
+
+<i class="fa-solid fa-envelope"></i>
+
+soussiahmed326@gmail.com
+
+</a>
+
+</div>
+
+</section>
+
+<!-- ===========================
+FOOTER
+=========================== -->
+
+<footer>
+
+<div class="container footer-content">
+
+<div class="footer-company">
+
+<img
+src="images/logo.png"
+class="footer-logo"
+alt="LS Programming Company">
+
+<h2>
+
+LS Programming Company
+
+</h2>
+
+<p data-lang="footer_gis">
+
+Professional GIS Platforms
+
+</p>
+
+<p data-lang="footer_webdev">
+
+Web Development
+
+</p>
+
+<p data-lang="footer_software">
+
+Software Engineering
+
+</p>
+
+</div>
+
+<div class="footer-security">
+
+<h3 data-lang="footer_security_title">
+
+Data Security
+
+</h3>
+
+<p id="footer-security-text">
+
+Building owner identities are
+
+<strong>
+
+Cryptés
+
+</strong>
+
+and are
+
+<strong>
+
+Accessible uniquement avec un Identifiant autorisé.
+
+</strong>
+
+</p>
+
+</div>
+
+<div class="footer-contact">
+
+<h3 data-lang="contact">
+
+Contact
+
+</h3>
+
+<a href="mailto:soussiahmed326@gmail.com">
+
+<i class="fa-solid fa-envelope"></i>
+
+soussiahmed326@gmail.com
+
+</a>
+
+</div>
+
+</div>
+
+<div class="footer-bottom">
+
+<p id="footer-designed-by">
+
+Designed & Developed by
+
+<strong>
+
+LS Programming Company
+
+</strong>
+
+</p>
+
+<p>
+
+© 2026 Sfax Medina Heritage
+
+</p>
+
+</div>
+
+</footer>
+
+<!-- ===========================
+SCRIPTS
+=========================== -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="atrisk-data.js"></script>
+
+<script src="atrisk-coordinates.js"></script>
+
+<script src="atrisk-i18n.js"></script>
+
+<script src="translations.js"></script>
+
+<script src="atrisk-map.js"></script>
+
+</body>
+
+</html>
